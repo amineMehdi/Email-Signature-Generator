@@ -1,11 +1,12 @@
 import React from 'react'
 
 type TableColumnProps = {
-  children : React.ReactNode
+  children? : React.ReactNode,
+  style? : React.CSSProperties
 }
-function TableColumn({children} : TableColumnProps) {
+function TableColumn({children, style} : TableColumnProps) {
   return (
-    <td>{children}</td>
+    <td style={style}>{children}</td>
   )
 }
 

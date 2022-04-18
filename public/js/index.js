@@ -66,19 +66,115 @@ exports["default"] = SignaturePreview;
 /*!*****************************************************!*\
   !*** ./resources/js/components/Template/Spacer.tsx ***!
   \*****************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
 
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
+exports.LinePosition = exports.SpacerType = void 0;
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var TableColumn_1 = __importDefault(__webpack_require__(/*! ./TableColumn */ "./resources/js/components/Template/TableColumn.tsx"));
+
+var TableGroup_1 = __importDefault(__webpack_require__(/*! ./TableGroup */ "./resources/js/components/Template/TableGroup.tsx"));
+
+var TableRow_1 = __importDefault(__webpack_require__(/*! ./TableRow */ "./resources/js/components/Template/TableRow.tsx"));
+
+var SpacerType;
+
+(function (SpacerType) {
+  SpacerType[SpacerType["Horizontal"] = 0] = "Horizontal";
+  SpacerType[SpacerType["Vertical"] = 1] = "Vertical";
+})(SpacerType = exports.SpacerType || (exports.SpacerType = {}));
+
+var LinePosition;
+
+(function (LinePosition) {
+  LinePosition["Top"] = "top";
+  LinePosition["Bottom"] = "bottom";
+  LinePosition["Center"] = "middle";
+})(LinePosition = exports.LinePosition || (exports.LinePosition = {}));
 
 function Spacer(_ref) {
   var type = _ref.type,
       line = _ref.line,
-      children = _ref.children,
       space = _ref.space;
+  var halfSpace = space / 2;
+
+  switch (type) {
+    case SpacerType.Horizontal:
+      if (line) {
+        return react_1["default"].createElement(TableGroup_1["default"], {
+          style: {
+            width: "100%"
+          }
+        }, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            height: "".concat(halfSpace, "px")
+          }
+        })), react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            display: 'block',
+            borderBottom: "".concat(line === null || line === void 0 ? void 0 : line.height, "px solid ").concat(line === null || line === void 0 ? void 0 : line.color),
+            width: "".concat(line === null || line === void 0 ? void 0 : line.width, "px"),
+            verticalAlign: "".concat(line === null || line === void 0 ? void 0 : line.position)
+          }
+        })), react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            height: "".concat(halfSpace, "px")
+          }
+        })));
+      } else {
+        return react_1["default"].createElement(TableGroup_1["default"], {
+          style: {
+            width: "100%"
+          }
+        }, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            height: "".concat(space, "px")
+          }
+        })));
+      }
+
+    case SpacerType.Vertical:
+      if (line) {
+        return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            width: "".concat(space, "px")
+          }
+        }), react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            display: 'table-cell',
+            borderLeft: "".concat(line === null || line === void 0 ? void 0 : line.width, "px solid ").concat(line === null || line === void 0 ? void 0 : line.color),
+            height: "".concat(line === null || line === void 0 ? void 0 : line.height, "px"),
+            width: "".concat(line === null || line === void 0 ? void 0 : line.width, "px"),
+            verticalAlign: "".concat(line === null || line === void 0 ? void 0 : line.position)
+          }
+        }), react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            width: "".concat(space, "px")
+          }
+        }));
+      } else {
+        return react_1["default"].createElement(TableColumn_1["default"], {
+          style: {
+            width: "".concat(space, "px")
+          }
+        });
+      }
+
+    default:
+      return react_1["default"].createElement("td", null);
+  }
 }
 
 exports["default"] = Spacer;
@@ -106,8 +202,11 @@ Object.defineProperty(exports, "__esModule", ({
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 function TableColumn(_ref) {
-  var children = _ref.children;
-  return react_1["default"].createElement("td", null, children);
+  var children = _ref.children,
+      style = _ref.style;
+  return react_1["default"].createElement("td", {
+    style: style
+  }, children);
 }
 
 exports["default"] = TableColumn;
@@ -135,8 +234,11 @@ Object.defineProperty(exports, "__esModule", ({
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 function TableGroup(_ref) {
-  var children = _ref.children;
-  return react_1["default"].createElement("table", null, react_1["default"].createElement("tbody", null, children));
+  var children = _ref.children,
+      style = _ref.style;
+  return react_1["default"].createElement("table", {
+    style: style
+  }, react_1["default"].createElement("tbody", null, children));
 }
 
 exports["default"] = TableGroup;
@@ -164,8 +266,11 @@ Object.defineProperty(exports, "__esModule", ({
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 function TableRow(_ref) {
-  var children = _ref.children;
-  return react_1["default"].createElement("tr", null, children);
+  var children = _ref.children,
+      style = _ref.style;
+  return react_1["default"].createElement("tr", {
+    style: style
+  }, children);
 }
 
 exports["default"] = TableRow;
@@ -238,6 +343,46 @@ react_dom_1["default"].render(react_1["default"].createElement(App_1["default"],
 
 
 
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -258,16 +403,50 @@ var TableRow_1 = __importDefault(__webpack_require__(/*! ../components/Template/
 
 var TextField_1 = __importDefault(__webpack_require__(/*! ../components/Template/TextField */ "./resources/js/components/Template/TextField.tsx"));
 
-var Spacer_1 = __importDefault(__webpack_require__(/*! ../components/Template/Spacer */ "./resources/js/components/Template/Spacer.tsx"));
+var Spacer_1 = __importStar(__webpack_require__(/*! ../components/Template/Spacer */ "./resources/js/components/Template/Spacer.tsx"));
 
 function SignatureTemplate() {
-  return react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement("img", {
+  return react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], {
+    style: {
+      verticalAlign: Spacer_1.LinePosition.Top
+    }
+  }, react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement("img", {
+    style: {
+      width: "130px"
+    },
     src: "https://avataaars.io/?avatarStyle=Circle&topType=Hat&accessoriesType=Blank&facialHairType=BeardMedium&facialHairColor=Auburn&clotheType=GraphicShirt&clotheColor=Gray01&graphicType=Diamond&eyeType=Default&eyebrowType=UpDown&mouthType=Smile&skinColor=Tanned",
     alt: 'profile image'
-  }))), react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement("img", {
+  }))), react_1["default"].createElement(Spacer_1["default"], {
+    type: Spacer_1.SpacerType.Horizontal,
+    space: 20
+  }), react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], {
+    style: {
+      textAlign: 'center'
+    }
+  }, react_1["default"].createElement("img", {
+    style: {
+      backgroundColor: 'lightblue'
+    },
     src: 'https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/linkedin-icon-2x.png',
     alt: 'linkedin'
-  }))))), react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement("h3", null, "EL-Mehdi Amine"), react_1["default"].createElement("p", null, "Developpeur"), react_1["default"].createElement("p", null, "Master | Boostcom")))), react_1["default"].createElement(Spacer_1["default"], null), react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement(TextField_1["default"], {
+  }))))), react_1["default"].createElement(Spacer_1["default"], {
+    type: Spacer_1.SpacerType.Vertical,
+    space: 40,
+    line: {
+      color: 'red',
+      width: 1,
+      height: 10,
+      position: Spacer_1.LinePosition.Center
+    }
+  }), react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement("h3", null, "EL-Mehdi Amine"), react_1["default"].createElement("p", null, "Developpeur"), react_1["default"].createElement("p", null, "Master | Boostcom")))), react_1["default"].createElement(Spacer_1["default"], {
+    type: Spacer_1.SpacerType.Horizontal,
+    line: {
+      color: 'red',
+      height: 1,
+      position: Spacer_1.LinePosition.Center
+    },
+    space: 20
+  }), react_1["default"].createElement(TableGroup_1["default"], null, react_1["default"].createElement(TableRow_1["default"], null, react_1["default"].createElement(TableColumn_1["default"], null, react_1["default"].createElement(TextField_1["default"], {
     icon: "1"
   }, " 0 6 20 21 73 25 "), react_1["default"].createElement(TextField_1["default"], {
     icon: "2"

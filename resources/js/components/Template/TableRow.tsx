@@ -1,12 +1,13 @@
 import React, { FC } from 'react'
 
 type TableRowProps = {
-  children : React.ReactNode
+  children : React.ReactNode,
+  style? : React.CSSProperties
 }
 
-function TableRow({children}: TableRowProps) {
+function TableRow({children, style}: TableRowProps) {
   return (
-    <tr>{children}</tr>
+    <tr style={style}>{children}</tr>
   )
 }
 

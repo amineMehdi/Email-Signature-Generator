@@ -1,11 +1,12 @@
 import React from 'react'
 
 type TableGroupProps = {
-  children : React.ReactNode
+  children? : React.ReactNode,
+  style? : React.CSSProperties
 }
-function TableGroup({ children } : TableGroupProps) {
+function TableGroup({ children, style } : TableGroupProps) {
   return (
-    <table>
+    <table style={style}>
       <tbody>
         {children}
       </tbody>
