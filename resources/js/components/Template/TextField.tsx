@@ -1,17 +1,25 @@
 import React from 'react'
+import TableColumn from './TableColumn'
+import TableRow from './TableRow'
 
 type TextFieldProps = {
-  icon: string,
+  icon?: React.ReactNode
   children : React.ReactNode
+  style?: React.CSSProperties
 }
-function TextField({children, icon}: TextFieldProps) {
+function TextField({children, icon, style}: TextFieldProps) {
+  if(children.every( (c :any) => c == '' || c == ' ')) return null
   return (
-    <div>
-    <span>
-      {icon}
-    </span>
-    {children}
-    </div>
+    <TableRow style={style}>
+      <TableColumn style={{
+        width: '30px'
+      }}>
+        {icon}
+      </TableColumn>
+      <TableColumn>
+        {children}
+      </TableColumn>
+    </TableRow>
     
   )
 }

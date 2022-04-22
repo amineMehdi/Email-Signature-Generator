@@ -1,25 +1,46 @@
 import React from 'react'
+
 import TableColumn from '../components/Template/TableColumn'
 import TableGroup from '../components/Template/TableGroup'
 import TableRow from '../components/Template/TableRow'
 import TextField from '../components/Template/TextField'
+
 import Spacer, { SpacerType, LinePosition } from '../components/Template/Spacer'
+import { useSelector } from 'react-redux'
+import { getForm } from '../components/Form/formSlice'
+
+import { GrMail } from 'react-icons/gr'
+import { BsFillTelephoneFill } from 'react-icons/bs'
+import { FaRegAddressCard } from 'react-icons/fa'
 
 function SignatureTemplate() {
+  const form = useSelector(getForm);
   return (
     <TableGroup>
       <TableRow>
-        <TableColumn style={{verticalAlign: LinePosition.Top}}>
+        <TableColumn style={{ verticalAlign: LinePosition.Top }}>
           <TableGroup>
             <TableRow>
               <TableColumn >
-                <img style={{width: `130px`}} src="https://avataaars.io/?avatarStyle=Circle&topType=Hat&accessoriesType=Blank&facialHairType=BeardMedium&facialHairColor=Auburn&clotheType=GraphicShirt&clotheColor=Gray01&graphicType=Diamond&eyeType=Default&eyebrowType=UpDown&mouthType=Smile&skinColor=Tanned" alt='profile image' />
+                <img style={{
+                  width: `130px`, // TODO: make this dynamic
+                  height: '130px',
+                  borderRadius: '100%',
+                  objectFit: 'cover'
+                }} src={form.profileImage} alt='profile image' />
               </TableColumn>
             </TableRow>
-            <Spacer type={SpacerType.Horizontal} space={20}/>
+          </TableGroup>
+
+          <Spacer type={SpacerType.Horizontal} space={20} />
+
+          <TableGroup>
             <TableRow>
               <TableColumn style={{ textAlign: 'center' }}>
-                <img style={{backgroundColor : 'lightblue'}} src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/linkedin-icon-2x.png' alt='linkedin' />
+                <img style={{ 
+                  backgroundColor: 'lightblue', 
+                  width: '30px' 
+                }} src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/linkedin-icon-2x.png' alt='linkedin' />
               </TableColumn>
             </TableRow>
           </TableGroup>
@@ -35,9 +56,8 @@ function SignatureTemplate() {
           <TableGroup>
             <TableRow>
               <TableColumn>
-                <h3>EL-Mehdi Amine</h3>
-                <p>Developpeur</p>
-                <p>Master | Boostcom</p>
+                <h3>{form.firstName} {form.lastName} </h3>
+                <p>{form.job}</p>
               </TableColumn>
             </TableRow>
           </TableGroup>
@@ -49,15 +69,15 @@ function SignatureTemplate() {
           }} space={20} />
 
           <TableGroup>
-            <TableRow>
-              <TableColumn>
-                <TextField icon={"1"}> 0 6 20 21 73 25 </TextField>
-                <TextField icon={"2"}> mehdi1915@gmail.com </TextField>
-                <TextField icon={"3"}> boostcom.fr </TextField>
-                <TextField icon={"4"}> 2 Boulevard du docteur calmette, 59800 Lille </TextField>
-
-              </TableColumn>
-            </TableRow>
+            <TextField icon={<BsFillTelephoneFill />} style={{
+              height: '30px',
+            }}> {form.phone} </TextField>
+            <TextField icon={<GrMail />} style={{
+              height: '30px',
+            }}> {form.email} </TextField>
+            <TextField icon={<FaRegAddressCard />} style={{
+              height: '30px',
+            }}> {form.address} </TextField>
           </TableGroup>
         </TableColumn>
       </TableRow>
