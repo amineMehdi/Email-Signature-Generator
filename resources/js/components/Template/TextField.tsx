@@ -8,7 +8,7 @@ type TextFieldProps = {
   style?: React.CSSProperties
 }
 function TextField({children, icon, style}: TextFieldProps) {
-  if(children.every( (c :any) => c == '' || c == ' ')) return null
+  if(children.every( (c :any) => c == '' || c == ' ' || c == null)) return null
   return (
     <TableRow style={style}>
       <TableColumn style={{

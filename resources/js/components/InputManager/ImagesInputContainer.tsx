@@ -1,4 +1,4 @@
-import { Group, TextInput, Text, Switch } from '@mantine/core'
+import { Group, TextInput, Text, Switch, Container } from '@mantine/core'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { useForm } from '@mantine/form';
@@ -7,22 +7,27 @@ import { BsLink45Deg } from 'react-icons/bs';
 import { BsImageFill } from 'react-icons/bs'
 
 import { useToggle } from '@mantine/hooks';
-import { updateForm } from '../Form/formSlice';
+import { updateImageForm } from '../Form/formSlice';
 
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function ImagesInputContainer() {
   const form = useForm({
     initialValues: {
-      profileImage: ''
+      profileImage: '',
+      companyLogo: ''
     }
   })
 
   const dispatch = useDispatch();
-  const [imageInput, setImageInput] = useToggle('link', ['link', 'image']);
-  const onImageLink = (value: any, type: String) => {
+  const [profileImageInput, setProfileImageInput] = useToggle('link', ['link', 'image']);
+  const [companyLogoInput , setCompanyLogoInput ] = useToggle('link', ['link', 'image']);
+  const [customCTAInput, setCustomCTAInput] = useToggle('link', ['link', 'image']);
+
+  const onImageLink = (value: any, type: any) => { // TODO : do not dispatch on every keystroke 
+    form.setFieldValue(type, value);
     if (value) {
-      dispatch(updateForm({ type, value }));
+      dispatch(updateImageForm({ type, value }));
     }
   }
 
@@ -52,22 +57,39 @@ function ImagesInputContainer() {
       {...form.getInputProps("profileImage")}
       placeholder="Image Link"
       icon={<BsLink45Deg size={20} />}
-      onChange={(e) => onTextFieldChange(e, 'profileImage')}
+      onChange={(e) => onImageLink(e.target.value, 'profileImage')}
     >
     </TextInput>
   )
 
   return (
     <>
-      <Group direction="column">
-        <Group position='apart'>
-          <Text>Image</Text>
-          <Switch onChange={() => setImageInput()}></Switch>
-        </Group>
-        {imageInput == 'image' ? ImageDropZone : ImageLinkInput}
-      </Group>
-      {/* <ImageInput name="Profile Picture"/>
-      <ImageInput name="Company Logo"/> */}
+      <Container>
+        <Container px={0} mb="lg">
+          <Group position='apart' mb="lg">
+            <Text>Image</Text>
+            <Switch onChange={() => setProfileImageInput()}></Switch>
+          </Group>
+          {profileImageInput === 'image' ? ImageDropZone : ImageLinkInput}
+        </Container>
+
+        <Container px={0} mb="lg">
+          <Group position='apart' mb="lg">
+            <Text>Company Logo</Text>
+            <Switch onChange={() => setCompanyLogoInput()}></Switch>
+          </Group>
+          {companyLogoInput === 'image' ? ImageDropZone : ImageLinkInput}
+        </Container>
+
+        <Container px={0} mb="lg">
+          <Group position='apart' mb="lg">
+            <Text>Custom CTA</Text>
+            <Switch onChange={() => setCustomCTAInput()}></Switch>
+          </Group>
+          {customCTAInput === 'image' ? ImageDropZone : ImageLinkInput}
+        </Container>
+
+      </Container>
 
     </>
   )

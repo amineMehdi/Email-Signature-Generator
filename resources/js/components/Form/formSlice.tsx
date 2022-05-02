@@ -1,34 +1,58 @@
 import React from 'react'
 import { createSlice } from '@reduxjs/toolkit'
-import defaultProfileImage from '../../../../storage/'
+
 const initialState = {
+  textForm : {
     firstName: 'John',
     lastName: 'Doe',
     email: 'john@doe.com',
     job: 'Worker',
-    phone: '06 123 456 78',
+    mobilePhone: '06 123 456 78',
+    officePhone : '01 234 567 89',
+    company : 'Company',
     address: '1 road street',
-    profileImage: 'https://caer.univ-amu.fr/wp-content/uploads/default-placeholder-768x768.png'
+    department : 'Departement',
+    websiteURL : 'www.exemple.com', // TODO: add label to this field
+    customField: '',                // TODO : Multiple Fields ?
+    facebook: ' ',
+    linkedin: ' ',
+    twitter: ' ',
+    instagram: ' '
+  },
+  imageForm : {
+    profileImage: 'https://caer.univ-amu.fr/wp-content/uploads/default-placeholder-768x768.png',
+    companyLogo: null,
+    customCTA : null
+  },
+  styleForm : {
+    themeColor : null,
+    textColor: null,
+    linkColor : null,
+    socialColor : null,
+    font: null,
+    fontSize: null,
+  }
 }
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    addForm: (state, action) => {
-      state.lastName = action.payload.lastName
-      state.email = action.payload.email
-      state.phone = action.payload.phone
-      state.address = action.payload.address
-      state.firstName = action.payload.firstName
-      state.job = action.payload.job
+    updateTextForm: (state, action) => {
+      state.textForm[action.payload.type] = action.payload.value.trim()
     },
-    updateForm: (state, action) => {
-      state[action.payload.type] = action.payload.value
+    updateImageForm: (state, action) => {
+      state.imageForm[action.payload.type] = action.payload.value
+    },
+    updateStyleForm: (state, action) => {
+      state.styleForm[action.payload.type] = action.payload.value
     }
   }
 
 })
-export const { addForm, updateForm } = formSlice.actions
-export const getForm = (state : any) => state.form
+export const {updateTextForm, updateImageForm, updateStyleForm } = formSlice.actions
+
+export const getImageForm = (state : any) => state.form.imageForm
+export const getTextForm = (state : any) => state.form.textForm
+export const getStyleForm = (state : any) => state.form.styleForm
 
 export default formSlice.reducer
