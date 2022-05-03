@@ -76,6 +76,7 @@ function SignatureTemplate() {
   }
 
   const CompanyLogo = () => {
+    if (isEmptyField(imageForm.companyLogo)) return null
     return (
       <TableRow>
         <TableColumn>
@@ -88,22 +89,53 @@ function SignatureTemplate() {
   }
 
   const SocialIcons = () => {
+    const socialIcons = [
+      {
+        field: textForm.facebook,
+        icon: <GrFacebookOption size={20} color="white" />,
+      },
+      {
+        field: textForm.instagram,
+        icon: <GrInstagram size={20} color="white" />,
+      },
+      {
+        field: textForm.twitter,
+        icon: <GrTwitter size={20} color="white" />,
+      },
+      {
+        field: textForm.linkedin,
+        icon: <GrLinkedinOption size={20} color="white" />,
+      }
+    ]
+    const availableSocialFields = socialIcons.filter(field => !isEmptyField(field.field))
+
+    if (availableSocialFields.length == 1) {
+      return (
+        <TableColumn>
+          <SocialIcon icon={availableSocialFields[0].icon} link={availableSocialFields[0].field} color='#0077B5' />
+        </TableColumn>
+      )
+    }
     return (
-      <TableRow>
-        <SocialIcon icon={<GrLinkedinOption size={20} color="white" />} link={textForm.linkedIn} color='#0077B5' />
-
-        <Spacer type={SpacerType.Vertical} space={10} />
-
-        <SocialIcon icon={<GrFacebookOption size={20} color="white" />} link={textForm.facebook} color='#0077B5' />
-
-        <Spacer type={SpacerType.Vertical} space={10} />
-
-        <SocialIcon icon={<GrInstagram size={20} color="white" />} link={textForm.instagram} color='#0077B5' />
-
-        <Spacer type={SpacerType.Vertical} space={10} />
-
-        <SocialIcon icon={<GrTwitter size={20} color="white" />} link={textForm.twitter} color='#0077B5' />
-      </TableRow>
+      <>
+        {availableSocialFields.map((socialField, index) => {
+          if (index == availableSocialFields.length - 1) {
+            return (
+              <TableColumn key={socialField.field}>
+                <SocialIcon icon={socialField.icon} link={socialField.field} color='#0077B5' />
+              </TableColumn>
+            )
+          }
+          return (
+            <>
+              <TableColumn key={socialField.field}>
+                <SocialIcon icon={socialField.icon} link={socialField.field} color='#0077B5' />
+              </TableColumn>
+              <Spacer type={SpacerType.Vertical} space={10} />
+            </>
+          )
+        })}
+      </>
     )
   }
 
@@ -148,18 +180,25 @@ function SignatureTemplate() {
           <TableGroup>
             <ProfileImage />
             <CompanyLogo />
+
+            {[textForm.facebook, textForm.instagram, textForm.twitter, textForm.linkedin]
+              .every(isEmptyField)
+              ? null
+              : (
+                <>
+                  <Spacer type={SpacerType.Horizontal} space={20} />
+                  <TableRow>
+                    <TableColumn style={{textAlign : 'center'}}>
+                      <TableGroup style={{ display: 'inline-block' }}>
+                        <TableRow>
+                            <SocialIcons />
+                        </TableRow>
+                      </TableGroup>
+                    </TableColumn>
+                  </TableRow>
+                </>
+              )}
           </TableGroup>
-          {[textForm.facebook, textForm.instagram, textForm.twitter, textForm.linkedIn]
-          .every(isEmptyField) 
-          ? null 
-          : (
-            <>
-          <Spacer type={SpacerType.Horizontal} space={20} />
-          <TableGroup>
-            <SocialIcons /> 
-          </TableGroup>
-          </>
-          )}
         </TableColumn>
 
         <Spacer type={SpacerType.Vertical} space={40}

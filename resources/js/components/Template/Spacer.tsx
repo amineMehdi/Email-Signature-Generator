@@ -51,11 +51,11 @@ function Spacer({ type, line, space }: SpacerProps) {
         )
       } else {
         return (
-          <TableGroup style={{ width: "100%" }}>
+          // <TableGroup style={{ width: "100%" }}>
             <TableRow>
               <TableColumn style={{ height: `${space}px` }} />
             </TableRow>
-          </TableGroup>
+          // </TableGroup>
         )
       }
 

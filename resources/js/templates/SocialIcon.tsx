@@ -8,13 +8,11 @@ type SocialIconProps = {
 }
 
 function SocialIcon({ icon, link, color }: SocialIconProps) {
-  // if (link == undefined || link.trim() == '' || link == null) return null
+  if (link == ' ' || link == '' || link == null) return null
   return (
-    <TableColumn>
-      <a href={link} style={{ display: 'block', borderRadius: '100%', backgroundColor: color, width: 'max-content', height: 'max-content', padding: '0.5rem' }}>
-        {icon}
-      </a>
-    </TableColumn>
+    <a href={link} style={{ display: 'block', borderRadius: '100%', backgroundColor: color, width: 'max-content', height: 'max-content', padding: '0.5rem' }}>
+      {icon}
+    </a>
   )
 }
 

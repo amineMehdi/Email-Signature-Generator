@@ -62,9 +62,9 @@ function Form() {
 
   const socialFieldInputs = [
     {
-      name: 'linkedIn',
+      name: 'linkedin',
       label: 'LinkedIn',
-      placeholder: formSelector.linkedIn,
+      placeholder: formSelector.linkedin,
       icon: <GrLinkedinOption />,
     },
     {
@@ -118,7 +118,7 @@ function Form() {
   return (
     <Group grow={true}>
       <form>
-        {textFieldInputs.map((field) => {
+        {/* {textFieldInputs.map((field) => {
           return <TextInput
             key={field.name}
             mb="lg"
@@ -127,7 +127,7 @@ function Form() {
             {...form.getInputProps(field.name)}
             onChange={(e) => onTextFieldChange(e, field.name)}
           />
-        })}
+        })} */}
 
         <Group direction='column' grow={true}>
           <Divider size="md" label="Social Links" labelPosition='center' labelProps={{ size: 'lg' }} />
@@ -139,6 +139,7 @@ function Form() {
             placeholder={field.placeholder}
             {...form.getInputProps(field.name)}
             onChange={(e) => onTextFieldChange(e, field.name)}
+            icon= {field.icon}
           />
         })}
 
