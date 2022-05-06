@@ -28,6 +28,10 @@ function SignatureTemplate() {
   const styleForm = useSelector(getStyleForm);
   const imageForm = useSelector(getImageForm);
 
+  const themeColor = styleForm.themeColor;
+  const textColor = styleForm.textColor;
+  // const linkColor = styleForm.linkColor;
+
   const isEmptyField = (field: string) => {
     return field == undefined || field == null || field.trim() === '';
   }
@@ -42,7 +46,7 @@ function SignatureTemplate() {
     return field([firstField, separator, secondField].join(" "), tag);
   }
 
-  const field = (field: string, type: Tags) => {
+  const field = (field: string, type: Tags = Tags.P) => {
     if (isEmptyField(field)) {
       return null;
     }
@@ -64,12 +68,15 @@ function SignatureTemplate() {
     return (
       <TableRow>
         <TableColumn >
-          <img style={{
+          <img
+          style={{
             maxWidth: '130px', // TODO: make this dynamic
             maxHeight: '130px',
             borderRadius: '100%',
             objectFit: 'cover'
-          }} src={imageForm.profileImage} alt='profile image' />
+          }} 
+          src={imageForm.profileImage} 
+          alt='profile image' />
         </TableColumn>
       </TableRow>
     )
@@ -80,9 +87,11 @@ function SignatureTemplate() {
     return (
       <TableRow>
         <TableColumn>
-          <img style={{
+          <img 
+          style={{
             maxWidth: '130px',
-          }} src={imageForm.companyLogo} />
+          }} 
+          src={imageForm.companyLogo} />
         </TableColumn>
       </TableRow>
     )
@@ -127,12 +136,12 @@ function SignatureTemplate() {
             )
           }
           return (
-            <>
-              <TableColumn key={socialField.field}>
+            <React.Fragment key={socialField.field}>
+              <TableColumn >
                 <SocialIcon icon={socialField.icon} link={socialField.field} color='#0077B5' />
               </TableColumn>
               <Spacer type={SpacerType.Vertical} space={10} />
-            </>
+            </React.Fragment>
           )
         })}
       </>
@@ -143,7 +152,7 @@ function SignatureTemplate() {
     return (
       <TableGroup>
         <TableRow>
-          <TableColumn>
+          <TableColumn style={{color: textColor}}>
             {parseMultipleFields(textForm.firstName, textForm.lastName, Tags.H3, " ")}
             {field(textForm.job, Tags.P)}
             {parseMultipleFields(textForm.department, textForm.company, Tags.P, "|")}
@@ -155,24 +164,59 @@ function SignatureTemplate() {
   }
 
   const ContactInfoFields = () => {
+    const contactFields = [
+      {
+        field: parseMultipleFields(textForm.mobilePhone, textForm.officePhone, Tags.P, "|"),
+        textColor,
+        icon: <BsFillTelephoneFill color={themeColor} size={20}/>
+      },
+      {
+        field: field(textForm.email),
+        textColor,
+        icon: <GrMail color={themeColor} size={20}/>
+      },
+      {
+        field: field(textForm.address),
+        textColor,
+        icon: <FaRegAddressCard color={themeColor} size={20}/>
+      },
+      {
+        field: field(textForm.websiteURL),
+        textColor,
+        icon: <BsLink45Deg color={themeColor} size={20}/>
+      }
+    ]
     return (
       <TableGroup>
-        { }
-        <TextField icon={<BsFillTelephoneFill />} style={{
-          height: '30px',
-        }}> {parseMultipleFields(textForm.mobilePhone, textForm.officePhone, Tags.P, "|")} </TextField>
-        <TextField icon={<GrMail />} style={{
-          height: '30px',
-        }}> {textForm.email} </TextField>
-        <TextField icon={<FaRegAddressCard />} style={{
-          height: '30px',
-        }}> {textForm.address} </TextField>
-        <TextField icon={<BsLink45Deg />} style={{
-          height: '30px',
-        }}> {textForm.websiteURL} </TextField>
+        {contactFields.map((contactField, index) => {
+          return (
+            <TextField 
+              key={index}
+              icon={contactField.icon}
+              color={contactField.textColor}
+              style = {{
+                height: '30px',
+              }}
+              >
+              {contactField.field}
+            </TextField>
+          )
+        })}
       </TableGroup>
     )
   }
+
+  const CustomCTA = () => {
+    if (isEmptyField(imageForm.customCTA)) return null
+    return (
+      <TableRow>
+        <TableColumn>
+          <img src={imageForm.customCTA} alt='custom CTA' />
+        </TableColumn>
+      </TableRow>
+    )
+  }
+
   return (
     <TableGroup>
       <TableRow>
@@ -188,10 +232,10 @@ function SignatureTemplate() {
                 <>
                   <Spacer type={SpacerType.Horizontal} space={20} />
                   <TableRow>
-                    <TableColumn style={{textAlign : 'center'}}>
+                    <TableColumn style={{ textAlign: 'center' }}>
                       <TableGroup style={{ display: 'inline-block' }}>
                         <TableRow>
-                            <SocialIcons />
+                          <SocialIcons />
                         </TableRow>
                       </TableGroup>
                     </TableColumn>
@@ -203,7 +247,7 @@ function SignatureTemplate() {
 
         <Spacer type={SpacerType.Vertical} space={40}
           line={{
-            color: 'red',
+            color: themeColor,
             width: 1,
             height: 10,
             position: LinePosition.Center
@@ -212,7 +256,7 @@ function SignatureTemplate() {
         <TableColumn>
           <TextFormFields />
           <Spacer type={SpacerType.Horizontal} line={{
-            color: 'red',
+            color: themeColor,
             height: 1,
             position: LinePosition.Center
           }} space={20} />
@@ -220,6 +264,7 @@ function SignatureTemplate() {
           <ContactInfoFields />
         </TableColumn>
       </TableRow>
+      <CustomCTA />
     </TableGroup>
   )
 }

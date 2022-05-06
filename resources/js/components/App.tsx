@@ -1,5 +1,4 @@
 import React from 'react';
-import Form from './Form/Form';
 import SignaturePreview from './SignaturePreview/SignaturePreview';
 import {Group, AppShell, Grid} from '@mantine/core';
 import { Provider } from 'react-redux';
@@ -16,7 +15,7 @@ function App() {
           <Grid.Col span={8} style={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'start',
           }}>
             <SignaturePreview/>
           </Grid.Col>

@@ -25,8 +25,8 @@ const initialState = {
     customCTA : null
   },
   styleForm : {
-    themeColor : null,
-    textColor: null,
+    themeColor : '#000',
+    textColor: '#000',
     linkColor : null,
     socialColor : null,
     font: null,

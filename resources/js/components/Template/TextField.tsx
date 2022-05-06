@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import TableColumn from './TableColumn'
 import TableRow from './TableRow'
 
 type TextFieldProps = {
   icon?: React.ReactNode
-  children : React.ReactNode
+  children : React.ReactNode | string
   style?: React.CSSProperties
+  color?: string
 }
-function TextField({children, icon, style}: TextFieldProps) {
-  if(children.every( (c :any) => c == '' || c == ' ' || c == null)) return null
+function TextField({children, icon, style, color}: TextFieldProps) {
+  console.log(children)
+  if (typeof children === "string" && (children === "" || children === undefined || children === null)) return null
+  if (children?.props.children === '' || children?.props.children === undefined || children?.props.children === null) return null
+
   return (
     <TableRow style={style}>
       <TableColumn style={{
@@ -16,7 +20,7 @@ function TextField({children, icon, style}: TextFieldProps) {
       }}>
         {icon}
       </TableColumn>
-      <TableColumn>
+      <TableColumn style={{color : color}}>
         {children}
       </TableColumn>
     </TableRow>

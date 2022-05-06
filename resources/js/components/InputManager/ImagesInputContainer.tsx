@@ -15,14 +15,15 @@ function ImagesInputContainer() {
   const form = useForm({
     initialValues: {
       profileImage: '',
-      companyLogo: ''
+      companyLogo: '',
+      customCTA: ''
     }
   })
 
   const dispatch = useDispatch();
   const [profileImageInput, setProfileImageInput] = useToggle('link', ['link', 'image']);
-  const [companyLogoInput , setCompanyLogoInput ] = useToggle('link', ['link', 'image']);
-  const [customCTAInput, setCustomCTAInput] = useToggle('link', ['link', 'image']);
+  const [companyLogoInput,  setCompanyLogoInput]  = useToggle('link', ['link', 'image']);
+  const [customCTAInput,    setCustomCTAInput]    = useToggle('link', ['link', 'image']);
 
   const onImageLink = (value: any, type: any) => { // TODO : do not dispatch on every keystroke 
     form.setFieldValue(type, value);
@@ -37,11 +38,11 @@ function ImagesInputContainer() {
     </Group>
   )
 
-  const ImageDropZone = (
-    <>
+  const ImageDropZone = (props: any) => {
+    return (
       <Dropzone
         style={{ border: '1px solid #ccc' }}
-        onDrop={(file) => onImageLink(URL.createObjectURL(file[0]), 'profileImage')}
+        onDrop={(file) => onImageLink(URL.createObjectURL(file[0]), props.type)}
         onReject={(file) => console.log('rejected files', file)} // TODO : launch a notification to the user
         maxSize={3 * 1024 * 1024}
         accept={IMAGE_MIME_TYPE}
@@ -49,19 +50,32 @@ function ImagesInputContainer() {
       >
         {(status) => dropzoneChildren(status)}
       </Dropzone>
-    </>
-  )
+    )
+  }
 
-  const ImageLinkInput = (
-    <TextInput
-      {...form.getInputProps("profileImage")}
-      placeholder="Image Link"
-      icon={<BsLink45Deg size={20} />}
-      onChange={(e) => onImageLink(e.target.value, 'profileImage')}
-    >
-    </TextInput>
-  )
+  const ImageLinkInput = (props: any) => {
+    return (
+      <TextInput
+        {...form.getInputProps(props.type)}
+        placeholder="Image Link"
+        icon={<BsLink45Deg size={20} />}
+        onChange={(e) => onImageLink(e.target.value, props.type)}
+      >
+      </TextInput>
+    )
+  }
 
+  const ImageSection = (props: any) => { // TODO Make it work
+    return (
+      <Container px={0} mb="lg">
+        <Group position='apart' mb="lg">
+          <Text>{props.label}</Text>
+          <Switch onChange={props.setSwitch}></Switch>
+        </Group>
+        {props.switch === 'image' ? <ImageDropZone type={props.fieldName} /> : <ImageLinkInput type={props.fieldName} />}
+      </Container>
+    )
+  }
   return (
     <>
       <Container>
@@ -70,7 +84,7 @@ function ImagesInputContainer() {
             <Text>Image</Text>
             <Switch onChange={() => setProfileImageInput()}></Switch>
           </Group>
-          {profileImageInput === 'image' ? ImageDropZone : ImageLinkInput}
+          {profileImageInput === 'image' ? <ImageDropZone type="profileImage" /> : <ImageLinkInput type="profileImage" />}
         </Container>
 
         <Container px={0} mb="lg">
@@ -78,7 +92,7 @@ function ImagesInputContainer() {
             <Text>Company Logo</Text>
             <Switch onChange={() => setCompanyLogoInput()}></Switch>
           </Group>
-          {companyLogoInput === 'image' ? ImageDropZone : ImageLinkInput}
+          {companyLogoInput === 'image' ? <ImageDropZone type="companyLogo" /> : <ImageLinkInput type="companyLogo" />}
         </Container>
 
         <Container px={0} mb="lg">
@@ -86,7 +100,7 @@ function ImagesInputContainer() {
             <Text>Custom CTA</Text>
             <Switch onChange={() => setCustomCTAInput()}></Switch>
           </Group>
-          {customCTAInput === 'image' ? ImageDropZone : ImageLinkInput}
+          {customCTAInput === 'image' ? <ImageDropZone type="customCTA" /> : <ImageLinkInput type="customCTA" />}
         </Container>
 
       </Container>
