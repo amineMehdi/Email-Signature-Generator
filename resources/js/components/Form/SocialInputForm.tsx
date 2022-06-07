@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getTextForm, updateTextForm } from './formSlice';
+import { getTextForm, initialState, updateTextForm } from './formSlice';
 
 import { GrLinkedinOption, GrFacebookOption, GrInstagram, GrTwitter } from 'react-icons/gr'
-import { Divider, TextInput } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 function SocialInputForm() {
@@ -50,9 +50,16 @@ function SocialInputForm() {
     dispatch(updateTextForm({ type, value: e.target.value }));
   }
 
+  useEffect(()=> {
+    socialFieldInputs.forEach((inputObj : any) => {
+      if(formSelector[inputObj.name] !== initialState.textForm[inputObj.name]) {
+        form.setFieldValue(inputObj.name, formSelector[inputObj.name]);
+      }
+    });
+  }, []);
+
   return (
     <form>
-      <Divider size="md" label="Social Links" labelPosition='center' labelProps={{ size: 'lg' }} />
       {socialFieldInputs.map((field) => {
         return <TextInput
           key={field.name}

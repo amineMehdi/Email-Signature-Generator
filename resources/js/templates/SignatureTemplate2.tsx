@@ -1,6 +1,6 @@
 import React from 'react'
-import TableGroup from '../components/Template/TableGroup'
-import TableRow from '../components/Template/TableRow'
+import TableGroup from '../components/TemplateComponents/TableGroup'
+import TableRow from '../components/TemplateComponents/TableRow'
 
 function SignatureTemplate2() {
   return (

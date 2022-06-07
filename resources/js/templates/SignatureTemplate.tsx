@@ -1,11 +1,11 @@
 import React from 'react'
 
-import TableColumn from '../components/Template/TableColumn'
-import TableGroup from '../components/Template/TableGroup'
-import TableRow from '../components/Template/TableRow'
-import TextField from '../components/Template/TextField'
+import TableColumn from '../components/TemplateComponents/TableColumn'
+import TableGroup  from '../components/TemplateComponents/TableGroup'
+import TableRow    from '../components/TemplateComponents/TableRow'
+import TextField   from '../components/TemplateComponents/TextField'
 
-import Spacer, { SpacerType, LinePosition } from '../components/Template/Spacer'
+import Spacer, { SpacerType, LinePosition } from '../components/TemplateComponents/Spacer'
 import { useSelector } from 'react-redux'
 import { getTextForm, getStyleForm, getImageForm } from '../components/Form/formSlice'
 
@@ -15,7 +15,7 @@ import { FaRegAddressCard } from 'react-icons/fa'
 import { GrLinkedinOption, GrFacebookOption, GrInstagram, GrTwitter } from 'react-icons/gr'
 import { BsLink45Deg } from 'react-icons/bs'
 
-import SocialIcon from './SocialIcon'
+import SocialIcon from '../components/TemplateComponents/SocialIcon'
 
 enum Tags {
   P,
@@ -23,6 +23,8 @@ enum Tags {
   H3,
   DIV
 }
+let tinyColor = require('tinycolor2');
+
 function SignatureTemplate() {
   const textForm = useSelector(getTextForm);
   const styleForm = useSelector(getStyleForm);
@@ -30,7 +32,7 @@ function SignatureTemplate() {
 
   const themeColor = styleForm.themeColor;
   const textColor = styleForm.textColor;
-  // const linkColor = styleForm.linkColor;
+  const linkColor = styleForm.linkColor;
 
   const isEmptyField = (field: string) => {
     return field == undefined || field == null || field.trim() === '';
@@ -101,19 +103,19 @@ function SignatureTemplate() {
     const socialIcons = [
       {
         field: textForm.facebook,
-        icon: <GrFacebookOption size={20} color="white" />,
+        icon: <GrFacebookOption size={20} color={tinyColor(linkColor).isDark() ? 'white': 'black'} />,
       },
       {
         field: textForm.instagram,
-        icon: <GrInstagram size={20} color="white" />,
+        icon: <GrInstagram size={20} color={tinyColor(linkColor).isDark() ? 'white': 'black'} />,
       },
       {
         field: textForm.twitter,
-        icon: <GrTwitter size={20} color="white" />,
+        icon: <GrTwitter size={20} color={tinyColor(linkColor).isDark() ? 'white': 'black'} />,
       },
       {
         field: textForm.linkedin,
-        icon: <GrLinkedinOption size={20} color="white" />,
+        icon: <GrLinkedinOption size={20} color={tinyColor(linkColor).isDark() ? 'white': 'black'} />,
       }
     ]
     const availableSocialFields = socialIcons.filter(field => !isEmptyField(field.field))
@@ -121,7 +123,7 @@ function SignatureTemplate() {
     if (availableSocialFields.length == 1) {
       return (
         <TableColumn>
-          <SocialIcon icon={availableSocialFields[0].icon} link={availableSocialFields[0].field} color='#0077B5' />
+          <SocialIcon icon={availableSocialFields[0].icon} link={availableSocialFields[0].field} color={linkColor} />
         </TableColumn>
       )
     }
@@ -131,14 +133,14 @@ function SignatureTemplate() {
           if (index == availableSocialFields.length - 1) {
             return (
               <TableColumn key={socialField.field}>
-                <SocialIcon icon={socialField.icon} link={socialField.field} color='#0077B5' />
+                <SocialIcon icon={socialField.icon} link={socialField.field} color={linkColor} />
               </TableColumn>
             )
           }
           return (
             <React.Fragment key={socialField.field}>
               <TableColumn >
-                <SocialIcon icon={socialField.icon} link={socialField.field} color='#0077B5' />
+                <SocialIcon icon={socialField.icon} link={socialField.field} color={linkColor} />
               </TableColumn>
               <Spacer type={SpacerType.Vertical} space={10} />
             </React.Fragment>

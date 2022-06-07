@@ -14,3 +14,5 @@ const mix = require('laravel-mix');
 mix.ts('resources/js/index.tsx', 'public/js/index.js')
     .react()
     .sass('resources/sass/app.scss', 'public/css');
+mix.ts('resources/js/editorIndex.tsx', 'public/js/editorIndex.js')
+    .react();

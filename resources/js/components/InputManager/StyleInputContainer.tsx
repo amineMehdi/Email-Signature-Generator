@@ -12,6 +12,7 @@ function StyleInputContainer() {
 
   const [themeColor, setThemeColor] = useState(formSelector.themeColor);
   const [textColor, setTextColor] = useState(formSelector.textColor);
+  const [linkColor, setLinkColor] = useState(formSelector.linkColor);
 
   const onColorChange = (value: string, type: any, setColor: any) => {
     setColor(value);
@@ -28,6 +29,11 @@ function StyleInputContainer() {
       label: 'Text Color',
       color: textColor,
       onChange: (value: string) => onColorChange(value, 'textColor', setTextColor),
+    },
+    {
+      label: 'Link Color',
+      color: linkColor,
+      onChange: (value: string) => onColorChange(value, 'linkColor', setLinkColor),
     }
 
   ]

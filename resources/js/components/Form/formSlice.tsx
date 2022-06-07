@@ -1,34 +1,34 @@
 import React from 'react'
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  textForm : {
+
+export const initialState = {
+  textForm: {
     firstName: 'John',
     lastName: 'Doe',
     email: 'john@doe.com',
     job: 'Worker',
     mobilePhone: '06 123 456 78',
-    officePhone : '01 234 567 89',
-    company : 'Company',
+    officePhone: '01 234 567 89',
+    company: 'Company',
     address: '1 road street',
-    department : 'Departement',
-    websiteURL : 'www.exemple.com', // TODO: add label to this field
+    department: 'Departement',
+    websiteURL: 'www.exemple.com', // TODO: add label to this field
     customField: '',                // TODO : Multiple Fields ?
     facebook: ' ',
     linkedin: ' ',
     twitter: ' ',
     instagram: ' '
   },
-  imageForm : {
+  imageForm: {
     profileImage: 'https://caer.univ-amu.fr/wp-content/uploads/default-placeholder-768x768.png',
     companyLogo: null,
-    customCTA : null
+    customCTA: null
   },
-  styleForm : {
-    themeColor : '#000',
+  styleForm: {
+    themeColor: '#000',
     textColor: '#000',
-    linkColor : null,
-    socialColor : null,
+    linkColor: '#2196f3',
     font: null,
     fontSize: null,
   }
@@ -49,10 +49,11 @@ const formSlice = createSlice({
   }
 
 })
-export const {updateTextForm, updateImageForm, updateStyleForm } = formSlice.actions
 
-export const getImageForm = (state : any) => state.form.imageForm
-export const getTextForm = (state : any) => state.form.textForm
-export const getStyleForm = (state : any) => state.form.styleForm
+export const { updateTextForm, updateImageForm, updateStyleForm } = formSlice.actions
+
+export const getImageForm = (state: any) => state.form.imageForm
+export const getTextForm = (state: any) => state.form.textForm
+export const getStyleForm = (state: any) => state.form.styleForm
 
 export default formSlice.reducer

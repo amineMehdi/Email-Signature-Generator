@@ -1,8 +1,8 @@
 import { TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getTextForm, updateTextForm } from './formSlice';
+import { getTextForm, updateTextForm, initialState } from './formSlice';
 
 function TextInputForm() {
   const dispatch = useDispatch();
@@ -77,6 +77,14 @@ function TextInputForm() {
     form.setFieldValue(type, e.target.value);
     dispatch(updateTextForm({ type, value: e.target.value }));
   }
+
+  useEffect(()=> {
+    textFieldInputs.forEach((inputObj : any) => {
+      if(formSelector[inputObj.name] !== initialState.textForm[inputObj.name]) {
+        form.setFieldValue(inputObj.name, formSelector[inputObj.name]);
+      }
+    });
+  }, []);
 
   return (
     <form>

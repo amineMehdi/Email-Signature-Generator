@@ -9,14 +9,10 @@ function App() {
     return (
       <Provider store={store}>
         <Grid grow >
-          <Grid.Col span={4} sx={{}}>
+          <Grid.Col span={4}>
             <InputManager/>
           </Grid.Col>
-          <Grid.Col span={8} style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'start',
-          }}>
+          <Grid.Col span={8} >
             <SignaturePreview/>
           </Grid.Col>
         </Grid>
