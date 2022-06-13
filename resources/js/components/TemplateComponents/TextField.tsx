@@ -4,13 +4,13 @@ import TableRow from './TableRow'
 
 type TextFieldProps = {
   icon?: React.ReactNode
-  children? : any
+  children?: any
   style?: React.CSSProperties
   color?: string
 }
-function TextField({children, icon, style, color}: TextFieldProps) {
+function TextField({ children, icon, style, color }: TextFieldProps) {
   if (typeof children === "string" && (children === "" || children === undefined || children === null)) return null
-  if (children.props.children === '' || children.props.children == null) return null
+  if (children == null || children.props.children === '') return null
 
   return (
     <TableRow style={style}>
@@ -19,11 +19,11 @@ function TextField({children, icon, style, color}: TextFieldProps) {
       }}>
         {icon}
       </TableColumn>
-      <TableColumn style={{color : color}}>
+      <TableColumn style={{ color: color }}>
         {children}
       </TableColumn>
     </TableRow>
-    
+
   )
 }
 

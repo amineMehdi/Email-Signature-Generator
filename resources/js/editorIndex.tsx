@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 
-import Editor from './components/Editor';
+import EditorContainer from './components/EditorContainer';
 
-console.log(window.location.pathname)
-ReactDOM.render(<Editor/>, document.getElementById('editor'));
+ReactDOM.render(<EditorContainer/>, document.getElementById('editor'));
